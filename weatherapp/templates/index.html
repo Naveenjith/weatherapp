@@ -1,0 +1,48 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherApp</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap"/>
+</head>
+<body>
+   <div class="container">
+    <h1>WeatherApp</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="city" placeholder="Enter the city">
+        <button type="submit">Search</button>
+    </form>
+    <div class="weather">
+        {% if error %}
+            <p>{{ error }}</p>
+        {% else %}
+            <div class="left">
+                <h2>{{ temp }}&#176; C</h2>
+                <h3>{{ city }}</h3>
+                <p>{{ humidity }}% Humidity</p>
+            </div>
+            <div class="right">
+                <div class="icon">
+                    <img src="http://openweathermap.org/img/w/{{ icon }}.png" width="100px">
+                </div>
+                <div class="condition">
+                    <p>{{ description }}</p>
+                    <p>{{ day }}</p>
+                </div>
+            </div>
+            {% if extreme_alert %}
+                <div class="alert">
+                    <p>{{ extreme_alert }}</p>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>
